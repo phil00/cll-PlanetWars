@@ -2,12 +2,15 @@
 #define THSERVEUR_H
 
 #include <QThread>
+#include <QtGui>
+#include <QtNetwork>
 
 class thServeur : public QThread
 {
     Q_OBJECT
 public:
     explicit thServeur(QObject *parent = 0);
+    QTcpSocket *sockServeur;
 
 signals:
 

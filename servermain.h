@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <thserveur.h>
 #include <QtGui>
+#include <QtNetwork>
 
 namespace Ui {
     class ServerMain;
@@ -20,11 +21,14 @@ public:
 private slots:
     void on_btnStartStop_clicked();
     void on_time_TimeOut();
+    void on_TcpServ_NewConnection();
 
 private:
     Ui::ServerMain *ui;
     thServeur *m_thServeur;
     QTimer* time;
+    QTcpServer *TcpServ;
+
 signals:
      void newTime();
 };

@@ -6,8 +6,10 @@ ServerMain::ServerMain(QWidget *parent) :
     ui(new Ui::ServerMain)
 {
     ui->setupUi(this);
+    TcpServ = new QTcpServer();
+    TcpServ->listen(QHostAddress::Any, 35994);
     connect(time, SIGNAL(timeout()), this, SLOT(on_time_TimeOut()));
-    connect(this, SIGNAL(newTime()), m_thServeur, SLOT(on_time_newTime()));
+    connect(TcpServ,SIGNAL(newConnection()), this, SLOT(on_TcpServ_NewConnection()));
 }
 
 ServerMain::~ServerMain()
@@ -20,14 +22,11 @@ void ServerMain::on_btnStartStop_clicked()
     if(ui->btnStartStop->text() == "Start")
     {
         ui->btnStartStop->setText("Stop");
-        m_thServeur->start();
         time->start(42);
     }
     else
     {
         ui->btnStartStop->setText("Start");
-        m_thServeur->terminate();
-        m_thServeur->wait();
         time->stop();
     }
 }
@@ -35,4 +34,13 @@ void ServerMain::on_btnStartStop_clicked()
 void ServerMain::on_time_TimeOut()
 {
     emit(newTime());
+}
+
+void ServerMain::on_TcpServ_NewConnection()
+{
+    m_thServeur = new thServeur();
+    connect(this, SIGNAL(newTime()), m_thServeur, SLOT(on_time_newTime()));
+    ui->sbNbUtilisateur->setValue(ui->sbNbUtilisateur->value() + 1);
+    m_thServeur->sockServeur = TcpServ->nextPendingConnection();
+    m_thServeur->start();
 }
