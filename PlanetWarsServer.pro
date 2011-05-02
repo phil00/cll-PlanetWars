@@ -4,15 +4,17 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui network
 
 TARGET = PlanetWarsServer
 TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        servermain.cpp
+        servermain.cpp \
+    thserveur.cpp
 
-HEADERS  += servermain.h
+HEADERS  += servermain.h \
+    thserveur.h
 
 FORMS    += servermain.ui

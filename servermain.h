@@ -2,6 +2,8 @@
 #define SERVERMAIN_H
 
 #include <QMainWindow>
+#include <thserveur.h>
+#include <QtGui>
 
 namespace Ui {
     class ServerMain;
@@ -17,9 +19,14 @@ public:
 
 private slots:
     void on_btnStartStop_clicked();
+    void on_time_TimeOut();
 
 private:
     Ui::ServerMain *ui;
+    thServeur *m_thServeur;
+    QTimer* time;
+signals:
+     void newTime();
 };
 
 #endif // SERVERMAIN_H
