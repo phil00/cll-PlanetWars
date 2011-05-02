@@ -4,6 +4,7 @@
 #include <QThread>
 #include <QtGui>
 #include <QtNetwork>
+#include <paquet.h>
 
 class thServeur : public QThread
 {
