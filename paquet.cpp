@@ -12,15 +12,19 @@ Paquet::Paquet(short Message, short Player, int Data[30])
 QByteArray Paquet::ToByteArray()
 {
     char temp;
-    QByteArray unBA;
+    QByteArray unBA ("");
     temp = (char)(255 & m_Message);
-    unBA.append(temp);
+    //unBA.append(temp);
+    unBA[0]= temp;
     temp = (char)(m_Message >> 8);
-    unBA.append(temp);
+   // unBA.append(temp);
+    unBA[1]= temp;
     temp = (char)(255 & m_Player);
-    unBA.append(temp);
+    //unBA.append(temp);
+    unBA[2]= temp;
     temp = (char)(m_Player >> 8);
-    unBA.append(temp);
+   // unBA.append(temp);
+    unBA[3]= temp;
     for(int i = 0; i < 30; i++)
     {
         temp = (char)(255 & m_Data[i]);
@@ -32,6 +36,7 @@ QByteArray Paquet::ToByteArray()
         temp = (char)(m_Data[i] >> 24);
         unBA.append(temp);
     }
+    QMessageBox::about(0, "ToBA", unBA);
     return unBA;
 }
 void Paquet::FromByteArray(QByteArray unBA)
@@ -47,4 +52,5 @@ void Paquet::FromByteArray(QByteArray unBA)
             j++;
         }
     }
+    QMessageBox::about(0, "FromBA", unBA);
 }

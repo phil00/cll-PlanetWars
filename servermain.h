@@ -22,6 +22,7 @@ private slots:
     void on_btnStartStop_clicked();
     void on_time_TimeOut();
     void on_TcpServ_NewConnection();
+    void on_pushButton_clicked();
 
 private:
     Ui::ServerMain *ui;

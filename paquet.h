@@ -12,7 +12,7 @@ public:
     int m_Data[30];
     public slots:
     QByteArray ToByteArray();
-    void FromByteArray(QByteArray un);
+    void FromByteArray(QByteArray unBA);
 };
 
 #endif // PAQUET_H

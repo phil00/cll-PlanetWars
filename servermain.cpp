@@ -8,6 +8,7 @@ ServerMain::ServerMain(QWidget *parent) :
     ui->setupUi(this);
     TcpServ = new QTcpServer();
     TcpServ->listen(QHostAddress::Any, 35994);
+    time = new QTimer();
     connect(time, SIGNAL(timeout()), this, SLOT(on_time_TimeOut()));
     connect(TcpServ,SIGNAL(newConnection()), this, SLOT(on_TcpServ_NewConnection()));
 }
@@ -43,4 +44,16 @@ void ServerMain::on_TcpServ_NewConnection()
     ui->sbNbUtilisateur->setValue(ui->sbNbUtilisateur->value() + 1);
     m_thServeur->sockServeur = TcpServ->nextPendingConnection();
     m_thServeur->start();
+}
+
+void ServerMain::on_pushButton_clicked()
+{
+    int yo[30];
+    for(int i; i<30;i++)
+    {
+        yo[i]=QString(ui->lineEdit_3->text()[i]).toInt();
+    }
+    Paquet *p = new Paquet(50, 49,yo);
+    QByteArray b = p->ToByteArray();
+    p->FromByteArray(b);
 }
