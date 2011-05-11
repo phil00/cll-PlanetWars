@@ -20,6 +20,9 @@ protected:
 
 public slots:
     void on_time_newTime();
+
+private:
+    QTimer thTimer;
 };
 
 #endif // THSERVEUR_H

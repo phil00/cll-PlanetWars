@@ -38,7 +38,7 @@ void Paquet::FromByteArray(QByteArray unBA)
 {
     m_Message = unBA[0] | (unBA[1] << 8);
     m_Player = unBA[2] | (unBA[3] << 8);
-    int j = 0;
+    int j = 4;
     for(int i = 0; i < 30; i++)
     {
         m_Data[i] = 0;
