@@ -9,7 +9,7 @@ Planet::Planet()
     //bool Focus;
     TickTillLastPop=100;
 }
-void Planet::initialize(int Owner, int Quadrant, QList<Planet> p)
+void Planet::initialize(int Owner, int Quadrant, QList<Planet> PlanetArray, int PlanetCount)
 {
     TickTillLastPop=100;
     int i =0;

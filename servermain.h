@@ -36,7 +36,7 @@ signals:
      void newTime();
      void SendMessage(QByteArray);
      void NewMessage(QByteArray);
-     //void Start();
+     void Start();
 };
 
 #endif // SERVERMAIN_H

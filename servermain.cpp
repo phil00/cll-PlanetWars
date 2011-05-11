@@ -11,8 +11,6 @@ ServerMain::ServerMain(QWidget *parent) :
     time = new QTimer();
     connect(time, SIGNAL(timeout()), this, SLOT(sl_time_TimeOut()));
     connect(TcpServ,SIGNAL(newConnection()), this, SLOT(sl_TcpServ_NewConnection()));
-    connect(m_thServeur, SIGNAL(NewMessage(QByteArray)), this, SLOT(sl_NewMessage(QByteArray)));
-    //connect(this, SIGNAL(Start), m_thServeur, SLOT(sl_Start()));
 }
 
 ServerMain::~ServerMain()
@@ -27,7 +25,7 @@ void ServerMain::on_btnStartStop_clicked()
         ui->btnStartStop->setText("Stop");
         if(!time->isActive())
         {
-            //emit(Start);
+            emit(Start());
             time->start(42);
         }
     }
@@ -48,6 +46,8 @@ void ServerMain::sl_TcpServ_NewConnection()
     m_thServeur = new thServeur();
     connect(this, SIGNAL(newTime()), m_thServeur, SLOT(on_time_newTime()));
     connect(this, SIGNAL(SendMessage(QByteArray)), m_thServeur, SLOT(on_SendMessage(QByteArray)));
+    connect(m_thServeur, SIGNAL(NewMessage(QByteArray)), this, SLOT(sl_NewMessage(QByteArray)));
+    connect(this, SIGNAL(Start), m_thServeur, SLOT(sl_Start()));
     ui->sbNbUtilisateur->setValue(ui->sbNbUtilisateur->value() + 1);
     m_thServeur->sockServeur = TcpServ->nextPendingConnection();
     m_thServeur->start();

@@ -20,9 +20,10 @@ signals:
     void NewMessage(QByteArray);
 
 public slots:
-    void on_time_newTime();
+    void sl_time_newTime();
     void ReadyToRead();
-    void on_SendMessage(QByteArray);
+    void sl_SendMessage(QByteArray);
+    void sl_Start();
 
 private:
     QTimer thTimer;
