@@ -13,10 +13,12 @@ TEMPLATE = app
 SOURCES += main.cpp\
         servermain.cpp \
     thserveur.cpp \
-    paquet.cpp
+    paquet.cpp \
+    planet.cpp
 
 HEADERS  += servermain.h \
     thserveur.h \
-    paquet.h
+    paquet.h \
+    planet.h
 
 FORMS    += servermain.ui

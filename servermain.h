@@ -5,6 +5,7 @@
 #include <thserveur.h>
 #include <QtGui>
 #include <QtNetwork>
+#include <planet.h>
 
 namespace Ui {
     class ServerMain;
