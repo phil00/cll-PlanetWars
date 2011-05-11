@@ -3,7 +3,7 @@
 thServeur::thServeur(QObject *parent) :
     QThread(parent)
 {
-    connect(sockserveur, SIGNAL(ReadyRead()), this, SLOT(ReadyToRead()));
+    connect(sockServeur, SIGNAL(ReadyRead()), this, SLOT(ReadyToRead()));
 }
 
 void thServeur::run()
@@ -15,7 +15,7 @@ void thServeur::run()
     }
 }
 
-void thServeur::on_time_newTime()
+void thServeur::sl_time_newTime()
 {
     int data[30];
     data[0] = 1;
@@ -28,12 +28,17 @@ void thServeur::ReadyToRead()
 {
     while(sockServeur->bytesAvailable())
     {
-        p->FromByteArray(sockServeur->read(124));
-        emit NewMessage(p);
+        emit NewMessage(sockServeur->read(124));
     }
 }
 
-void on_SendMessage(QByteArray send)
+void thServeur::sl_SendMessage(QByteArray send)
+{
+    sockServeur->write(send);
+    sockServeur->waitForBytesWritten();
+}
+
+void thServeur::sl_Start()
 {
 
 }

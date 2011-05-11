@@ -20,9 +20,10 @@ public:
 
 private slots:
     void on_btnStartStop_clicked();
-    void on_time_TimeOut();
-    void on_TcpServ_NewConnection();
+    void sl_time_TimeOut();
+    void sl_TcpServ_NewConnection();
     void on_pushButton_clicked();
+    void sl_NewMessage(QByteArray);
 
 private:
     Ui::ServerMain *ui;
@@ -32,6 +33,9 @@ private:
 
 signals:
      void newTime();
+     void SendMessage(QByteArray);
+     void NewMessage(QByteArray);
+     //void Start();
 };
 
 #endif // SERVERMAIN_H

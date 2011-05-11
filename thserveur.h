@@ -13,16 +13,20 @@ public:
     explicit thServeur(QObject *parent = 0);
     QTcpSocket *sockServeur;
 
-signals:
 
 protected:
     void run();
+signals:
+    void NewMessage(QByteArray);
 
 public slots:
     void on_time_newTime();
+    void ReadyToRead();
+    void on_SendMessage(QByteArray);
 
 private:
     QTimer thTimer;
+    Paquet *p;
 };
 
 #endif // THSERVEUR_H
