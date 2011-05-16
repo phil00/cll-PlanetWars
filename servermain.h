@@ -17,6 +17,7 @@ class ServerMain : public QMainWindow
 
 public:
     explicit ServerMain(QWidget *parent = 0);
+    QList<Planet> Planets;
     ~ServerMain();
 
 private slots:
@@ -36,7 +37,7 @@ signals:
      void newTime();
      void SendMessage(QByteArray);
      void NewMessage(QByteArray);
-     void Start();
+     void Start(QList<Planet>, short);
 };
 
 #endif // SERVERMAIN_H

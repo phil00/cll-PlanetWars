@@ -23,9 +23,29 @@ void ServerMain::on_btnStartStop_clicked()
     if(ui->btnStartStop->text() == "Start")
     {
         ui->btnStartStop->setText("Stop");
-        if(!time->isActive())
+        if( !time->isActive() )
         {
-            emit(Start());
+            qsrand( QTime::currentTime().msec() );
+            int random = 6 + qrand()%15;
+            Planet temp;
+            for( int i = 0 ; i < random ; i++)
+            {
+                if( i == 1 )
+                {
+                   temp.initialize( 1, 1, Planets );
+                }
+                else
+                {
+                   temp.initialize( 5, 1, Planets );
+                }
+                Planets.append(temp);
+            }
+            for( int i = 0 ; i < random ; i++ )
+            {
+                temp.MirrorPlanet( Planets[i], 2, Planets.length() );
+                Planets.append(temp);
+            }
+            emit(Start(Planets, (short)ui->sbNbUtilisateur->value()));
             time->start(42);
         }
     }
