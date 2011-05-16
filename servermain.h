@@ -17,7 +17,7 @@ class ServerMain : public QMainWindow
 
 public:
     explicit ServerMain(QWidget *parent = 0);
-    QList<Planet> Planets;
+    QList<Planet> m_Planets;
     ~ServerMain();
 
 private slots:
@@ -30,8 +30,8 @@ private slots:
 private:
     Ui::ServerMain *ui;
     thServeur *m_thServeur;
-    QTimer* time;
-    QTcpServer *TcpServ;
+    QTimer* m_time;
+    QTcpServer * m_TcpServ;
 
 signals:
      void newTime();

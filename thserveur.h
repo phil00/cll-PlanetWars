@@ -12,7 +12,7 @@ class thServeur : public QThread
     Q_OBJECT
 public:
     explicit thServeur(QObject *parent = 0);
-    QTcpSocket *sockServeur;
+    QTcpSocket *m_sockServeur;
 
 
 protected:
@@ -27,8 +27,7 @@ public slots:
     void sl_Start(QList<Planet>, short);
 
 private:
-    QTimer thTimer;
-    Paquet *p;
+    Paquet * m_p;
 };
 
 #endif // THSERVEUR_H

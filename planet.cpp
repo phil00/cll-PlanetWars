@@ -2,14 +2,14 @@
 
 Planet::Planet()
 {
-    TickTillLastPop=100;
+    m_TickTillLastPop=100;
 }
 
 void Planet::initialize(int Owner, int Quadrant,QList<Planet> PlanetArray)
 {
-    TickTillLastPop=100;
+    m_TickTillLastPop=100;
     int i =0;
-    Player=Owner;
+    m_Player=Owner;
     bool Collision = false;
     int sizex = 480;
     int sizey = 770;
@@ -22,62 +22,61 @@ void Planet::initialize(int Owner, int Quadrant,QList<Planet> PlanetArray)
     }
     do
     {
-        if(Player!=1)
+        if(m_Player!=1)
         {
             temp = QPoint(qrand()%sizex,qrand()%sizey);
-            PopulationGrowth = 15+qrand()%50;
+            m_PopulationGrowth = 15+qrand()%50;
         }
 
         else
         {
             temp = QPoint(qrand()%(sizex-40),qrand()%(sizey-40));
-            PopulationGrowth = 20+qrand()%45;
+            m_PopulationGrowth = 20+qrand()%45;
         }
-        tempsize = PopulationGrowth;
-        Location=QRect(temp,QSize(tempsize,tempsize));
-        GenerationRect = QRect(QPoint(temp.x()-Location.width()/2,temp.y()-Location.height()/2),QSize(Location.width()*2,Location.height()*2));
+        tempsize = m_PopulationGrowth;
+        m_Location=QRect(temp,QSize(tempsize,tempsize));
+        m_GenerationRect = QRect(QPoint(temp.x()-m_Location.width()/2,temp.y()-m_Location.height()/2),QSize(m_Location.width()*2,m_Location.height()*2));
         i=0;
         while(i<PlanetArray.length())
         {
            Collision = CheckPlanetToPlanetCollision(PlanetArray[i]);
            i++;
         }
-        PlanetNumber=i;
+        m_PlanetNumber=i;
 
     }while(Collision);
-    Population= PopulationGrowth;
-    PFocus = false;
+    m_Population = m_PopulationGrowth;
+    m_PFocus = false;
 }
 
 void Planet::MirrorPlanet(Planet SomePlanet,int Quadrant, int PlanetCount)
 {
-    TickTillLastPop=100;
+    m_TickTillLastPop=100;
     int placex = 1024;
     int placey = 768;
-    Player=2;
+    m_Player=2;
     if(Quadrant!=1)
     {
         if(Quadrant==2)
         {
-            if(SomePlanet.Player==1)
+            if(SomePlanet.m_Player==1)
             {
-                PlanetImg.load("PR.png",0);
-                Player=2;
+                m_PlanetImg.load("PR.png",0);
+                m_Player=2;
             }
             placex = 1024;
-            placey = SomePlanet.Location.y()*2;
-             Player=2;
-
+            placey = SomePlanet.m_Location.y()*2;
+            m_Player=2;
         }
         else
         if(Quadrant==3)
         {
-            if(SomePlanet.Player==1)
+            if(SomePlanet.m_Player==1)
             {
-                PlanetImg.load("PR.png",0);//change for other color later
-                Player=3;
+                m_PlanetImg.load("PR.png",0);//change for other color later
+                m_Player=3;
             }
-            placex = SomePlanet.Location.x()*2;
+            placex = SomePlanet.m_Location.x()*2;
             placey = 768;
 
 
@@ -85,10 +84,10 @@ void Planet::MirrorPlanet(Planet SomePlanet,int Quadrant, int PlanetCount)
         else
         if(Quadrant==4)
         {
-            if(SomePlanet.Player==1)
+            if(SomePlanet.m_Player == 1)
             {
-                PlanetImg.load("PR.png",0);
-                Player=4;
+                m_PlanetImg.load("PR.png",0);
+                m_Player=4;
             }
             placex = 1024;
             placey = 768;
@@ -97,36 +96,36 @@ void Planet::MirrorPlanet(Planet SomePlanet,int Quadrant, int PlanetCount)
     else
     {
         //1 Quadrant means its a 1v1 game, so generate for player 2
-        if(SomePlanet.Player==1)
+        if(SomePlanet.m_Player==1)
         {
-            PlanetImg.load("PR.png",0);
-            Player=2;
+            m_PlanetImg.load("PR.png",0);
+            m_Player=2;
         }
     }
 
-    if(SomePlanet.Player == 5)
+    if(SomePlanet.m_Player == 5)
     {
-        Player=5;
-        PlanetImg.load("PG.png",0);
+        m_Player=5;
+        m_PlanetImg.load("PG.png",0);
     }
-    Location = QRect(QPoint(placex-SomePlanet.Location.x()-SomePlanet.Location.width(),placey-SomePlanet.Location.y()),QSize(SomePlanet.Location.size()));
-    Player=SomePlanet.Player;
-    PopulationGrowth=PopulationGrowth;
-    Population =SomePlanet.Population;
-    PlanetNumber = SomePlanet.PlanetNumber+PlanetCount;
-    PFocus = false;
+    m_Location = QRect(QPoint(placex-SomePlanet.m_Location.x()-SomePlanet.m_Location.width(),placey-SomePlanet.m_Location.y()),QSize(SomePlanet.m_Location.size()));
+    m_Player=SomePlanet.m_Player;
+    m_PopulationGrowth=m_PopulationGrowth;
+    m_Population =SomePlanet.m_Population;
+    m_PlanetNumber = SomePlanet.m_PlanetNumber+PlanetCount;
+    m_PFocus = false;
 }
 
 bool Planet::CheckPlanetToPlanetCollision(Planet planet2)
 {
     QRect temp = QRect(QPoint(0,0),QSize(1100,900));
-    if(GenerationRect.intersects(planet2.GenerationRect))
+    if(m_GenerationRect.intersects(planet2.m_GenerationRect))
     {
         return true;
     }
     else
     {
-    if(GenerationRect.intersects(temp))
+    if(m_GenerationRect.intersects(temp))
     {
         return false;
     }
@@ -140,31 +139,31 @@ bool Planet::CheckPlanetToPlanetCollision(Planet planet2)
 
 void Planet::PlanetTick(int tickAmmount)
 {
-    TickTillLastPop-=tickAmmount;
-    if(TickTillLastPop <= PopulationGrowth)
+    m_TickTillLastPop-=tickAmmount;
+    if(m_TickTillLastPop <= m_PopulationGrowth)
     {
-    Population += 1;
-    TickTillLastPop = 100;
+        m_Population += 1;
+        m_TickTillLastPop = 100;
     }
 }
 
 void Planet::initializeFromint(int W[])
 {
-     PFocus = false;
-     Player = W[0];
-     PopulationGrowth = W[1];
-     Population = W[2];
-     Location = QRect(QPoint(W[3],W[4]),QSize(W[5],W[6]));
+     m_PFocus = false;
+     m_Player = W[0];
+     m_PopulationGrowth = W[1];
+     m_Population = W[2];
+     m_Location = QRect(QPoint(W[3],W[4]),QSize(W[5],W[6]));
 }
 
 int * Planet::Toint()
 {
-    pl[0] = Player;
-    pl[1] = PopulationGrowth;
-    pl[2] = Population;
-    pl[3] = Location.topLeft().rx();
-    pl[4] = Location.topLeft().ry();
-    pl[5] = Location.width();
-    pl[6] = Location.height();
-    return pl;
+    m_pl[0] = m_Player;
+    m_pl[1] = m_PopulationGrowth;
+    m_pl[2] = m_Population;
+    m_pl[3] = m_Location.topLeft().rx();
+    m_pl[4] = m_Location.topLeft().ry();
+    m_pl[5] = m_Location.width();
+    m_pl[6] = m_Location.height();
+    return m_pl;
 }

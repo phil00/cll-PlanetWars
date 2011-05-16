@@ -6,11 +6,11 @@ ServerMain::ServerMain(QWidget *parent) :
     ui(new Ui::ServerMain)
 {
     ui->setupUi(this);
-    TcpServ = new QTcpServer();
-    TcpServ->listen(QHostAddress::Any, 35994);
-    time = new QTimer();
-    connect(time, SIGNAL(timeout()), this, SLOT(sl_time_TimeOut()));
-    connect(TcpServ,SIGNAL(newConnection()), this, SLOT(sl_TcpServ_NewConnection()));
+    m_TcpServ = new QTcpServer();
+    m_TcpServ->listen(QHostAddress::Any, 35994);
+    m_time = new QTimer();
+    connect(m_time, SIGNAL(timeout()), this, SLOT(sl_time_TimeOut()));
+    connect(m_TcpServ,SIGNAL(newConnection()), this, SLOT(sl_TcpServ_NewConnection()));
 }
 
 ServerMain::~ServerMain()
@@ -23,7 +23,7 @@ void ServerMain::on_btnStartStop_clicked()
     if(ui->btnStartStop->text() == "Start")
     {
         ui->btnStartStop->setText("Stop");
-        if( !time->isActive() )
+        if( !m_time->isActive() )
         {
             qsrand( QTime::currentTime().msec() );
             int random = 6 + qrand()%15;
@@ -32,27 +32,27 @@ void ServerMain::on_btnStartStop_clicked()
             {
                 if( i == 1 )
                 {
-                   temp.initialize( 1, 1, Planets );
+                   temp.initialize( 1, 1, m_Planets );
                 }
                 else
                 {
-                   temp.initialize( 5, 1, Planets );
+                   temp.initialize( 5, 1, m_Planets );
                 }
-                Planets.append(temp);
+                m_Planets.append(temp);
             }
             for( int i = 0 ; i < random ; i++ )
             {
-                temp.MirrorPlanet( Planets[i], 2, Planets.length() );
-                Planets.append(temp);
+                temp.MirrorPlanet( m_Planets[i], 2, m_Planets.length() );
+                m_Planets.append(temp);
             }
-            emit(Start(Planets, (short)ui->sbNbUtilisateur->value()));
-            time->start(42);
+            emit(Start(m_Planets, (short)ui->sbNbUtilisateur->value()));
+            m_time->start(42);
         }
     }
     else
     {
         ui->btnStartStop->setText("Start");
-        time->stop();
+        m_time->stop();
     }
 }
 
@@ -64,13 +64,21 @@ void ServerMain::sl_time_TimeOut()
 void ServerMain::sl_TcpServ_NewConnection()
 {
     m_thServeur = new thServeur();
-    connect(this, SIGNAL(newTime()), m_thServeur, SLOT(on_time_newTime()));
-    connect(this, SIGNAL(SendMessage(QByteArray)), m_thServeur, SLOT(on_SendMessage(QByteArray)));
+    connect(this, SIGNAL(newTime()), m_thServeur, SLOT(sl_time_newTime()));
+    connect(this, SIGNAL(SendMessage(QByteArray)), m_thServeur, SLOT(sl_SendMessage(QByteArray)));
     connect(m_thServeur, SIGNAL(NewMessage(QByteArray)), this, SLOT(sl_NewMessage(QByteArray)));
-    connect(this, SIGNAL(Start), m_thServeur, SLOT(sl_Start()));
+    connect(this, SIGNAL(Start(QList<Planet>, short)), m_thServeur, SLOT(sl_Start(QList<Planet>, short)));
     ui->sbNbUtilisateur->setValue(ui->sbNbUtilisateur->value() + 1);
-    m_thServeur->sockServeur = TcpServ->nextPendingConnection();
-    m_thServeur->start();
+   /* if(ui->sbNbUtilisateur->value() == 2 || ui->sbNbUtilisateur->value() == 4)
+    {
+        ui->btnStartStop->setEnabled(true);
+    }
+    else
+    {
+        ui->btnStartStop->setEnabled(false);
+    }*/
+    m_thServeur->m_sockServeur = m_TcpServ->nextPendingConnection();
+    //m_thServeur->start();
 }
 
 void ServerMain::on_pushButton_clicked()

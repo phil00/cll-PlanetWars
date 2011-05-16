@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>ServerMain</string>
+   <string>PlanetWars Serveur</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QLabel" name="lblNbUtilidateur">
@@ -41,6 +41,9 @@
     </property>
    </widget>
    <widget class="QPushButton" name="btnStartStop">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>250</x>
@@ -56,7 +59,7 @@
    <widget class="QLineEdit" name="lineEdit">
     <property name="geometry">
      <rect>
-      <x>30</x>
+      <x>20</x>
       <y>70</y>
       <width>113</width>
       <height>27</height>

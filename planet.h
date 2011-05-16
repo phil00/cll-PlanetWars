@@ -9,15 +9,16 @@ class Planet
     //Q_OBJECT
 public:
     explicit Planet();
-    QRect Location;
-    QRect GenerationRect;
-    int Population;
-    int PlanetNumber;
-    int Player;
-    int PopulationGrowth;
-    bool PFocus;
-    int TickTillLastPop;
-    QImage PlanetImg;
+    QRect m_Location;
+    QRect m_GenerationRect;
+    int m_Population;
+    int m_PlanetNumber;
+    int m_Player;
+    int m_PopulationGrowth;
+    bool m_PFocus;
+    int m_TickTillLastPop;
+    QImage m_PlanetImg;
+    int m_pl[7];
     //populationGrowth va etre utiliser pour determiner la grandeur de la planete.
     //une variable de texture
     //int planettype;
@@ -27,7 +28,6 @@ public:
     void PlanetTick(int tickAmmount);
     void initializeFromint(int W[]);
     int * Toint();
-    int pl[7];
 private:
     void LoadImage();
 signals:
