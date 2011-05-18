@@ -44,3 +44,9 @@ void thServeur::sl_Start(QList<Planet> p, short nbP)
         sl_SendMessage(pk->ToByteArray());
     }
 }
+
+void thServeur::sl_Stop()
+{
+    m_sockServeur->disconnectFromHost();
+    m_sockServeur->waitForDisconnected();
+}

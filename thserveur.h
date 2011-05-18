@@ -25,6 +25,7 @@ public slots:
     void ReadyToRead();
     void sl_SendMessage(QByteArray);
     void sl_Start(QList<Planet>, short);
+    void sl_Stop();
 
 private:
     Paquet * m_p;

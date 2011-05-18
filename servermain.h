@@ -38,6 +38,7 @@ signals:
      void SendMessage(QByteArray);
      void NewMessage(QByteArray);
      void Start(QList<Planet>, short);
+     void Stop();
 };
 
 #endif // SERVERMAIN_H
