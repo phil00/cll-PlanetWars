@@ -21,6 +21,22 @@ ServerMain::~ServerMain()
 
 void ServerMain::on_btnStartStop_clicked()
 {
+    /*Planet *p = new Planet();
+    p->m_Location.setX(50);
+    p->m_Location.setY(50);
+    p->m_Location.setWidth(10);
+    p->m_Location.setHeight(10);
+    p->m_GenerationRect.setX(40);
+    p->m_GenerationRect.setY(40);
+    p->m_GenerationRect.setWidth(30);
+    p->m_GenerationRect.setHeight(30);
+    p->m_PFocus = false;
+    p->m_PlanetNumber = 1;
+    p->m_Player = 1;
+    p->m_Population = 25;
+    p->m_PopulationGrowth = 25;
+    p->m_TickTillLastPop = 100;
+    m_Planets.append(*p);*/
     if(ui->btnStartStop->text() == "Start")
     {
         ui->btnStartStop->setText("Stop");

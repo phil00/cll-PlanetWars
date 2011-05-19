@@ -157,8 +157,8 @@ int * Planet::Toint()
     m_pl[0] = m_Player;
     m_pl[1] = m_PopulationGrowth;
     m_pl[2] = m_Population;
-    m_pl[3] = m_Location.topLeft().rx();
-    m_pl[4] = m_Location.topLeft().ry();
+    m_pl[3] = m_Location.x();
+    m_pl[4] = m_Location.y();
     m_pl[5] = m_Location.width();
     m_pl[6] = m_Location.height();
     m_pl[7] = m_PlanetNumber;
