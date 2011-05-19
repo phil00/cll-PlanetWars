@@ -9,6 +9,7 @@ ServerMain::ServerMain(QWidget *parent) :
     m_TcpServ = new QTcpServer();
     m_TcpServ->listen(QHostAddress::Any, 35994);
     m_time = new QTimer();
+    m_Joueur = 0;
     connect(m_time, SIGNAL(timeout()), this, SLOT(sl_time_TimeOut()));
     connect(m_TcpServ,SIGNAL(newConnection()), this, SLOT(sl_TcpServ_NewConnection()));
 }
@@ -25,24 +26,25 @@ void ServerMain::on_btnStartStop_clicked()
         ui->btnStartStop->setText("Stop");
         if( !m_time->isActive() )
         {
-            qsrand( QTime::currentTime().msec() );
-            int random = 6 + qrand()%15;
+            qsrand(QTime::currentTime().msec());
+            int random = 8+qrand()%6;
             Planet temp;
-            for( int i = 0 ; i < random ; i++)
+            for(int i =0;i<random;i++)
             {
-                if( i == 1 )
+                if(i==1)
                 {
-                   temp.initialize( 1, 1, m_Planets );
+                    temp.initialize(1,1,m_Planets);
                 }
                 else
                 {
-                   temp.initialize( 5, 1, m_Planets );
+                    temp.initialize(5,1,m_Planets);
                 }
                 m_Planets.append(temp);
             }
-            for( int i = 0 ; i < random ; i++ )
+            for(int i = 0;i<random;i++)
             {
-                temp.MirrorPlanet( m_Planets[i], 2, m_Planets.length() );
+                temp.MirrorPlanet(m_Planets[i],2,m_Planets.length());
+                temp.m_Location.moveRight(temp.m_Location.x()+120);
                 m_Planets.append(temp);
             }
             emit(Start(m_Planets, (short)ui->sbNbUtilisateur->value()));
@@ -84,6 +86,8 @@ void ServerMain::sl_TcpServ_NewConnection()
         ui->btnStartStop->setEnabled(false);
     }*/
     m_thServeur->m_sockServeur = m_TcpServ->nextPendingConnection();
+    m_Joueur = m_Joueur + 1;
+    m_thServeur->m_Joueur = m_Joueur;
     //m_thServeur->start();
 }
 

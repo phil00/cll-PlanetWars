@@ -13,6 +13,7 @@ class thServeur : public QThread
 public:
     explicit thServeur(QObject *parent = 0);
     QTcpSocket *m_sockServeur;
+    int m_Joueur;
 
 
 protected:

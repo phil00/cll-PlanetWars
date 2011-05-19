@@ -54,14 +54,12 @@ void Planet::MirrorPlanet(Planet SomePlanet,int Quadrant, int PlanetCount)
     m_TickTillLastPop=100;
     int placex = 1024;
     int placey = 768;
-    m_Player=2;
     if(Quadrant!=1)
     {
         if(Quadrant==2)
         {
             if(SomePlanet.m_Player==1)
             {
-                m_PlanetImg.load("PR.png",0);
                 m_Player=2;
             }
             placex = 1024;
@@ -73,7 +71,6 @@ void Planet::MirrorPlanet(Planet SomePlanet,int Quadrant, int PlanetCount)
         {
             if(SomePlanet.m_Player==1)
             {
-                m_PlanetImg.load("PR.png",0);//change for other color later
                 m_Player=3;
             }
             placex = SomePlanet.m_Location.x()*2;
@@ -84,9 +81,8 @@ void Planet::MirrorPlanet(Planet SomePlanet,int Quadrant, int PlanetCount)
         else
         if(Quadrant==4)
         {
-            if(SomePlanet.m_Player == 1)
+            if(SomePlanet.m_Player==1)
             {
-                m_PlanetImg.load("PR.png",0);
                 m_Player=4;
             }
             placex = 1024;
@@ -98,7 +94,6 @@ void Planet::MirrorPlanet(Planet SomePlanet,int Quadrant, int PlanetCount)
         //1 Quadrant means its a 1v1 game, so generate for player 2
         if(SomePlanet.m_Player==1)
         {
-            m_PlanetImg.load("PR.png",0);
             m_Player=2;
         }
     }
@@ -106,14 +101,14 @@ void Planet::MirrorPlanet(Planet SomePlanet,int Quadrant, int PlanetCount)
     if(SomePlanet.m_Player == 5)
     {
         m_Player=5;
-        m_PlanetImg.load("PG.png",0);
     }
     m_Location = QRect(QPoint(placex-SomePlanet.m_Location.x()-SomePlanet.m_Location.width(),placey-SomePlanet.m_Location.y()),QSize(SomePlanet.m_Location.size()));
     m_Player=SomePlanet.m_Player;
-    m_PopulationGrowth=m_PopulationGrowth;
+    m_PopulationGrowth=SomePlanet.m_PopulationGrowth;
     m_Population =SomePlanet.m_Population;
     m_PlanetNumber = SomePlanet.m_PlanetNumber+PlanetCount;
     m_PFocus = false;
+
 }
 
 bool Planet::CheckPlanetToPlanetCollision(Planet planet2)

@@ -18,6 +18,7 @@ class ServerMain : public QMainWindow
 public:
     explicit ServerMain(QWidget *parent = 0);
     QList<Planet> m_Planets;
+    int m_Joueur;
     ~ServerMain();
 
 private slots:

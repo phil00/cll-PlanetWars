@@ -50,6 +50,8 @@ void thServeur::sl_Start(QList<Planet> p, short nbP)
         pk = new Paquet(2, nbP, pl);
         sl_SendMessage(pk->ToByteArray());
     }
+    pk = new Paquet(4, m_Joueur, pl);
+    sl_SendMessage(pk->ToByteArray());
 }
 
 void thServeur::sl_Stop()
