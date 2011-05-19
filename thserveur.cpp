@@ -4,7 +4,6 @@ thServeur::thServeur(QObject *parent) :
     QThread(parent)
 {
     m_sockServeur = new QTcpSocket();
-    connect(m_sockServeur, SIGNAL(readyRead()), this, SLOT(ReadyToRead()));
 }
 
 void thServeur::run()
@@ -17,6 +16,7 @@ void thServeur::sl_time_newTime()
     data[0] = 1;
     m_p = new Paquet(1, 255, data);
     sl_SendMessage(m_p->ToByteArray());
+    delete m_p;
 }
 
 void thServeur::ReadyToRead()
@@ -52,6 +52,7 @@ void thServeur::sl_Start(QList<Planet> p, short nbP)
     }
     pk = new Paquet(4, m_Joueur, pl);
     sl_SendMessage(pk->ToByteArray());
+    delete pk;
 }
 
 void thServeur::sl_Stop()

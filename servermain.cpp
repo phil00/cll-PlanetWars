@@ -17,6 +17,9 @@ ServerMain::ServerMain(QWidget *parent) :
 ServerMain::~ServerMain()
 {
     delete ui;
+    delete m_TcpServ;
+    delete m_time;
+    delete m_thServeur;
 }
 
 void ServerMain::on_btnStartStop_clicked()
@@ -45,27 +48,22 @@ void ServerMain::on_btnStartStop_clicked()
             qsrand(QTime::currentTime().msec());
             int random = 8+qrand()%6;
             Planet temp;
-            for(int i =0;i<random;i++)
+            temp.initialize(1,1,m_Planets);
+            m_Planets.append(temp);
+            for(int i =1;i<random;i++)
             {
-                if(i==1)
-                {
-                    temp.initialize(1,1,m_Planets);
-                }
-                else
-                {
-                    temp.initialize(5,1,m_Planets);
-                }
+                temp.initialize(5,1,m_Planets);
                 m_Planets.append(temp);
             }
             for(int i = 0;i<random;i++)
             {
-                temp.MirrorPlanet(m_Planets[i],2,m_Planets.length());
+                temp.MirrorPlanet(m_Planets[i],1,m_Planets.length());
                 temp.m_Location.moveRight(temp.m_Location.x()+120);
                 m_Planets.append(temp);
             }
             emit(Start(m_Planets, (short)ui->sbNbUtilisateur->value()));
             m_time->start(42);
-        }
+       }
     }
     else
     {
@@ -102,6 +100,7 @@ void ServerMain::sl_TcpServ_NewConnection()
         ui->btnStartStop->setEnabled(false);
     }*/
     m_thServeur->m_sockServeur = m_TcpServ->nextPendingConnection();
+    connect(m_thServeur->m_sockServeur, SIGNAL(readyRead()), m_thServeur, SLOT(ReadyToRead()));
     m_Joueur = m_Joueur + 1;
     m_thServeur->m_Joueur = m_Joueur;
     //m_thServeur->start();
@@ -117,6 +116,7 @@ void ServerMain::on_pushButton_clicked()
     Paquet *p = new Paquet(50, 49,yo);
     QByteArray b = p->ToByteArray();
     p->FromByteArray(b);
+    delete p;
 }
 
 void ServerMain::sl_NewMessage(QByteArray p)
