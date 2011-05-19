@@ -3,6 +3,7 @@
 Planet::Planet()
 {
     m_TickTillLastPop=100;
+    m_PlanetNumber = 0;
 }
 
 void Planet::initialize(int Owner, int Quadrant,QList<Planet> PlanetArray)
@@ -160,5 +161,6 @@ int * Planet::Toint()
     m_pl[4] = m_Location.topLeft().ry();
     m_pl[5] = m_Location.width();
     m_pl[6] = m_Location.height();
+    m_pl[7] = m_PlanetNumber;
     return m_pl;
 }
