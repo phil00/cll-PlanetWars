@@ -19,6 +19,7 @@ protected:
     void run();
 signals:
     void NewMessage(QByteArray);
+    void Deco();
 
 public slots:
     void sl_time_newTime();

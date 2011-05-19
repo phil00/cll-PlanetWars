@@ -29,8 +29,15 @@ void thServeur::ReadyToRead()
 
 void thServeur::sl_SendMessage(QByteArray send)
 {
-    m_sockServeur->write(send);
-    m_sockServeur->waitForBytesWritten();
+    if(m_sockServeur->state() != 0)
+    {
+        m_sockServeur->write(send);
+        m_sockServeur->waitForBytesWritten(1000);
+    }
+    else
+    {
+        emit(Deco());
+    }
 }
 
 void thServeur::sl_Start(QList<Planet> p, short nbP)
@@ -47,6 +54,8 @@ void thServeur::sl_Start(QList<Planet> p, short nbP)
 
 void thServeur::sl_Stop()
 {
-    m_sockServeur->disconnectFromHost();
-    m_sockServeur->waitForDisconnected();
+    if(m_sockServeur->state() != 0)
+    {
+        m_sockServeur->disconnectFromHost();
+    }
 }

@@ -46,7 +46,7 @@ void ServerMain::on_btnStartStop_clicked()
                 m_Planets.append(temp);
             }
             emit(Start(m_Planets, (short)ui->sbNbUtilisateur->value()));
-            m_time->start(1000);
+            m_time->start(42);
         }
     }
     else
@@ -54,6 +54,9 @@ void ServerMain::on_btnStartStop_clicked()
         ui->btnStartStop->setText("Start");
         m_time->stop();
         emit(Stop());
+        m_thServeur->terminate();
+        m_thServeur->wait(1000);
+        ui->sbNbUtilisateur->setValue(0);
     }
 }
 
@@ -68,6 +71,7 @@ void ServerMain::sl_TcpServ_NewConnection()
     connect(this, SIGNAL(newTime()), m_thServeur, SLOT(sl_time_newTime()));
     connect(this, SIGNAL(SendMessage(QByteArray)), m_thServeur, SLOT(sl_SendMessage(QByteArray)));
     connect(m_thServeur, SIGNAL(NewMessage(QByteArray)), this, SLOT(sl_NewMessage(QByteArray)));
+    connect(m_thServeur, SIGNAL(Deco()), this, SLOT(on_btnStartStop_clicked()));
     connect(this, SIGNAL(Start(QList<Planet>, short)), m_thServeur, SLOT(sl_Start(QList<Planet>, short)));
     connect(this,SIGNAL(Stop()), m_thServeur, SLOT(sl_Stop()));
     ui->sbNbUtilisateur->setValue(ui->sbNbUtilisateur->value() + 1);
